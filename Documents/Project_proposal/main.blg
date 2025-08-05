@@ -1,0 +1,58 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
+The style file: plain.bst
+Reallocating 'name_of_file' (item size: 1) to 8 items.
+Database file #1: ref.bib
+Warning--empty journal in baba2025proveragent
+Warning--empty journal in chenSeedProverDeepBroad2025
+Warning--empty year in chenSeedProverDeepBroad2025
+Warning--empty journal in liu2025safe
+Warning--empty journal in patel2025leantutor
+Warning--empty journal in rajeev2025cats
+Warning--empty journal in ren2025deepseek
+Warning--empty journal in thakur2024context
+Warning--empty journal in thakur2025langagent
+You've used 8 entries,
+            2118 wiz_defined-function locations,
+            524 strings with 6207 characters,
+and the built_in function-call counts, 4037 in all, are:
+= -- 310
+> -- 444
+< -- 0
++ -- 178
+- -- 168
+* -- 380
+:= -- 767
+add.period$ -- 23
+call.type$ -- 8
+change.case$ -- 107
+chr.to.int$ -- 0
+cite$ -- 17
+duplicate$ -- 80
+empty$ -- 137
+format.name$ -- 168
+if$ -- 715
+int.to.chr$ -- 0
+int.to.str$ -- 8
+missing$ -- 8
+newline$ -- 42
+num.names$ -- 16
+pop$ -- 125
+preamble$ -- 1
+purify$ -- 99
+quote$ -- 0
+skip$ -- 56
+stack$ -- 0
+substring$ -- 42
+swap$ -- 0
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 32
+warning$ -- 9
+while$ -- 16
+width$ -- 9
+write$ -- 72
+(There were 9 warnings)

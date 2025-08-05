@@ -1,0 +1,57 @@
+\begin{thebibliography}{1}
+
+\bibitem{baba2025proveragent}
+Kaito Baba, Chong Liu, Satoshi Kurita, and Akinori Sannai.
+\newblock Prover agent: An agent-based framework for formal mathematical
+  proofs.
+\newblock 2025.
+
+\bibitem{chenSeedProverDeepBroad2025}
+Luoxin Chen, Jinming Gu, Liankai Huang, Wenhao Huang, Zhicheng Jiang, Allan
+  Jie, Xiaoran Jin, Xing Jin, Chenggang Li, Kaijing Ma, Cheng Ren, Jiawei Shen,
+  Wenlei Shi, Tong Sun, He~Sun, Jiahui Wang, Siran Wang, Zhihong Wang, Chenrui
+  Wei, Shufa Wei, Yonghui Wu, Yuchen Wu, Yihang Xia, Huajian Xin, Fan Yang,
+  Huaiyuan Ying, Hongyi Yuan, Zheng Yuan, Tianyang Zhan, Chi Zhang, Yue Zhang,
+  Ge~Zhang, Tianyun Zhao, Jianqiu Zhao, Yichi Zhou, and Thomas~Hanwen Zhu.
+\newblock Seed-{{Prover}}: {{Deep}} and {{Broad Reasoning}} for {{Automated
+  Theorem Proving}}.
+
+\bibitem{liu2025safe}
+Chen Liu, Yizhi Yuan, Yingtong Yin, Yang Xu, Xin Xu, Zelin Chen, Yue Wang,
+  Li~Shang, Qun Liu, and Ming Zhang.
+\newblock Safe: Enhancing mathematical reasoning in large language models via
+  retrospective step-aware formal verification.
+\newblock 2025.
+
+\bibitem{patel2025leantutor}
+Mihir Patel, Rounak Bhattacharyya, Tianshi Lu, Aarav Mehta, Nathaniel Voss,
+  Negar Norouzi, and Gauri Ranade.
+\newblock Leantutor: A formally-verified ai tutor for mathematical proofs.
+\newblock 2025.
+
+\bibitem{rajeev2025cats}
+Maitreya Rajeev, Rajasekharan Ramamurthy, Pulkit Trivedi, Vivek Yadav, Olatunji
+  Bamgbose, Sudarshan~T Madhusudan, James Zou, and Nazneen~Fatema Rajani.
+\newblock Cats confuse reasoning llm: Query agnostic adversarial triggers for
+  reasoning models.
+\newblock 2025.
+
+\bibitem{ren2025deepseek}
+Zhezheng Ren, Zhongyu Shao, Junhua Song, Hang Xin, Hao Wang, Wen Zhao, Liang
+  Zhang, Zhiyang Fu, Qiang Zhu, Donghong Yang, et~al.
+\newblock Deepseek-prover-v2: Advancing formal mathematical reasoning via
+  reinforcement learning for subgoal decomposition.
+\newblock 2025.
+
+\bibitem{thakur2024context}
+Anshuman Thakur, Giorgos Tsoukalas, Yufei Wen, Jiongkun Xin, and Swarat
+  Chaudhuri.
+\newblock An in-context learning agent for formal theorem-proving.
+\newblock 2024.
+
+\bibitem{thakur2025langagent}
+Anshuman Thakur, Yufei Wen, and Swarat Chaudhuri.
+\newblock A language-agent approach to formal theorem-proving.
+\newblock 2025.
+
+\end{thebibliography}

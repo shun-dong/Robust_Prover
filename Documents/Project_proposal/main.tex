@@ -1,0 +1,126 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{pgfgantt}
+
+
+\setstretch{1.15}
+\begin{document}
+
+\begin{center}
+    \Huge\textbf{OxCam Programmes - AI+ Course 2025} \\
+    \huge\textbf{Project Proposal}
+\end{center}
+
+\begin{center}
+    \Large
+    \begin{tabular}{>{\bfseries}p{6cm}p{10cm}}
+        Programme Cohort & Large Language Models \& Generative AI \\
+        Course Group & GEA-Group 2 \\
+        Group Name & Robust Mathematical Problem Solver \\
+        Group Members & Liu Peixuan, Long Haobo, Cao Shuhan, Wu Jiayu, Wu Xuanyu, Wei Yanran, Jin Huiyan \\
+    \end{tabular}
+\end{center}
+
+\vspace{1em}
+
+\section*{Project Title}
+Robust Mathematical Reasoning Agent: Enhancing Robustness and Verifiability in AI Problem Solving
+
+\section*{Project Summary}
+
+Large language models (LLMs) demonstrate remarkable capabilities in mathematical reasoning, yet their robustness remains a significant concern. Recent research, such as \cite{rajeev2025cats}, highlights that introducing irrelevant or adversarial information into prompts can drastically impair reasoning accuracy, exposing the susceptibility of current LLMs to such interference. Furthermore, the rising complexity of mathematical tasks requires not only robust natural language understanding but also the formal verification of logical reasoning steps to ensure correctness \cite{ren2025deepseek, liu2025safe, chenSeedProverDeepBroad2025}. Contemporary frameworks have shown the benefits of combining LLM-generated informal reasoning with formal verification backends, e.g., Lean or Coq, to improve trustworthiness \cite{patel2025leantutor, thakur2024context, baba2025proveragent}. Our project builds upon these directions and aims to develop an anti-interference mathematical reasoning agent that merges natural language reasoning with formal logic verification while mitigating the influence of prompt injections and adversarial triggers. Specifically, our agent will pre-filter noise or adversarial triggers, generate stepwise natural language reasoning, translate it into a formal proof for automatic checking, and iteratively refine answers based on proof feedback. Furthermore, by fine-tuning LLMs for adversarial resistance and designing agent-based multi-tool strategies, we anticipate improved robustness, interpretability, and verifiability in mathematical problem solving. The expected outcome is a deployable prototype agent, rigorous evaluation on adversarial mathematical datasets \cite{rajeev2025cats}, and a detailed analysis of strengths and failure cases, paving the way for more trustworthy AI-powered theorem proving and mathematical problem solving.
+
+
+\section*{Project Significance and Contribution to the Field}
+
+Ensuring the reliability and interpretability of LLM-generated reasoning is a rapidly growing concern, especially in mathematics, where logical soundness is paramount. Prior work has revealed both the vulnerabilities of LLMs to adversarial prompt injections \cite{rajeev2025cats} and the usefulness of combining LLMs with formal verification frameworks to enhance solution correctness and accountability \cite{ren2025deepseek, liu2025safe, patel2025leantutor}. Agent-based approaches for formal reasoning have recently emerged \cite{baba2025proveragent, thakur2025langagent, thakur2024context}, but existing agents often overlook robust anti-interference mechanisms and may not close the feedback loop between automated proof checking and LLM reasoning generation. Our project systematically integrates:
+\begin{enumerate}
+    \item pre-processing modules for noise or adversarial removal as motivated by \cite{rajeev2025cats},
+    \item agent frameworks orchestrating multiple reasoning and verification components \cite{baba2025proveragent, ren2025deepseek},
+    \item verification-driven feedback for self-correction, as explored in recent systems \cite{liu2025safe, patel2025leantutor}.
+\end{enumerate}
+Methodologically, our advances include new workflows for joint informal and formal reasoning, targeted fine-tuning for adversarial resistance, and new evaluation metrics for robustness. These contributions offer both practical tools and new insights towards reliable and scalable math-reasoning agents, with implications for broader AI research on adversarial robustness and automated verification \cite{patel2025leantutor, ren2025deepseek}.
+
+
+
+
+\section*{Project Timeline and Task Allocations}
+
+% using a Gantt Chart
+
+\begin{ganttchart}[
+    title/.style={draw=none,fill=white},
+    title label font=\bfseries,
+    x unit=0.5cm,
+    y unit title=0.8cm,
+    y unit chart=0.8cm,
+    time slot format=isodate,
+    vgrid={*6{draw=none},dotted},
+    hgrid
+    ]{2025-08-01}{2025-08-24}
+    \gantttitlecalendar{year, month=name, day} \\
+    
+    \ganttgroup{Preparatory Phase}{2025-08-01}{2025-08-10} \\
+    \ganttbar[bar/.append style={fill=blue!30}]{Literature Review}{2025-08-01}{2025-08-04} \\
+    \ganttbar[bar/.append style={fill=green!30}]{Tool Setup}{2025-08-01}{2025-08-07} \\
+    \ganttbar[bar/.append style={fill=red!30}]{Dataset Curation}{2025-08-02}{2025-08-15} \\
+    
+    \ganttgroup{Execution Phase}{2025-08-11}{2025-08-22} \\
+    \ganttbar[bar/.append style={fill=orange!30}]{Anti-interference Module}{2025-08-11}{2025-08-15} \\
+    \ganttbar[bar/.append style={fill=magenta!30}]{NLP Reasoning Module}{2025-08-12}{2025-08-16} \\
+    \ganttlinkedbar[bar/.append style={fill=purple!30}]{Lean Integration}{2025-08-14}{2025-08-19} \\
+    \ganttlinkedbar[bar/.append style={fill=olive!30}]{Auto-correction Module}{2025-08-14}{2025-08-20} \\
+    \ganttbar[bar/.append style={fill=gray!30}]{Metric \& Eval Integration}{2025-08-13}{2025-08-20} \\
+    \ganttlinkedbar[bar/.append style={fill=cyan!30}]{Agent Testing}{2025-08-17}{2025-08-22} \\
+    
+
+    \ganttmilestone{Progress Review}{2025-08-17} \\
+    \ganttmilestone{Final Demo}{2025-08-22} \\
+    
+    \ganttbar[bar/.append style={fill=yellow!10}]{Progress Tracking \& Doc}{2025-08-01}{2025-08-22}
+\end{ganttchart}\\
+
+
+
+
+\textbf{Task allocations:} 
+\begin{enumerate}
+    \item Liu Peixuan: Tracks project progress and maintains comprehensive project documentation.
+    \item Long Haobo: Responsible for implementing the anti-interference module in Python to ensure system robustness.
+    \item Cao Shuhan: Designs and integrates the natural language reasoning generation and transformation components using LLMs and agent frameworks.
+    \item Wu Jiayu: Develops the auto-correction agent to improve the accuracy of formal proof outputs.
+    \item Wu Xuanyu: Collects and organizes math problem datasets for system evaluation and development.
+    \item Wei Yanran: Sets up the test framework and conducts metric calculations for performance assessment.
+    \item Jin Huiyan: Analyzes evaluation results and provides feedback for system optimization.
+\end{enumerate}
+
+\section*{Bibliography}
+
+\bibliographystyle{plain}
+\bibliography{ref.bib}
+
+\vspace{2em}
+
+\noindent\emph{Total Word Count (excluding bibliography):}
+514
+%------------ Evaluation Sheet
+\newpage
+\section*{Evaluation Sheet}
+
+\noindent
+\textit{This section is to be completed by the Instructor(s). }
+
+\vspace{2em}
+\noindent
+\textbf{Final Mark:} \vspace{2em}
+
+\noindent
+\textbf{Further Comments:}
+\vspace{6em}
+\end{document}
