@@ -24,6 +24,14 @@ Concept Explanations
 3. 形式化证明 - 符合严格逻辑规则的计算机验证证明
 4. 形式化语言（如lean） - 为逻辑证明设计的严密表达方式
 5. 模型微调（fine-tune） - 针对特定任务的进一步训练
+
+# Info
+Programme Cohort: Large Language Models & Generative AI
+Course Group: GEA-Group 2
+Group Name: Robust Mathematical Problem Solver
+Group Members: Liu Peixuan, Long Haobo, Cao Shuhan, Wu Jiayu, Wu Xuanyu, Wei Yanran, Jin Huiyan
+slogan: Logic. Rigor. Automation.
+
 # Proposed Workflow
 1. 预处理去干扰
 2. 生成自然语言推理
