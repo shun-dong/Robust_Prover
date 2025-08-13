@@ -1,7 +1,7 @@
 import requests
 import json
 
-def get_answer(model: str, message: str, messages: list, system: str = "") -> str:
+def get_answer(model: str , message: str = "", messages: list = [], system: str = "") -> str:
     # 设置API端点
     url = "https://xxxxxxxxx"
     
