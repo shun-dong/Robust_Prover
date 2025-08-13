@@ -1,3 +1,3 @@
-def translate(LLA: str) -> str:
+def translate(NLA: str) -> str:
     pass
     return LLA
