@@ -2,8 +2,15 @@ from prepare import prepare
 from translate import translate
 from fix import fix
 
-def total(NLQ: str) -> str:
+def total(NLQ: str):
     NLA = prepare(NLQ)
-    LLA = translate(NLA)
-    fixed, _ = fix(LLA)
-    return fixed
+    LLA, _ = translate(NLQ,NLA)
+    fixcount = 0
+    fixed, LLA = fix(LLA)
+    if fixcount < 90:
+        if not fixed:
+            fixcount += 1
+            fixed, LLA = fix(LLA)
+    else:
+        return LLA, -1
+    return LLA, fixcount
