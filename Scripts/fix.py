@@ -1,3 +1,6 @@
-def fix(LLA: str) -> str:
+def fix(LLA: str):
     pass
-    return (LLA, fixed)
+    return LLA, fixed
+
+
+if
