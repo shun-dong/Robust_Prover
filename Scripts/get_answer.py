@@ -1,7 +1,7 @@
 import requests
 import json
 
-def get_answer(model: str , message: str = "", messages: list = [], system: str = "") -> str:
+def get_answer(message: str = "", model: str = "deepseek-ai/DeepSeek-V3",  messages: list = [], system_prompt: str = "") -> str:
     '''
     this is a function to get answer from chat model
     '''
@@ -30,10 +30,10 @@ def get_answer(model: str , message: str = "", messages: list = [], system: str 
         raise ValueError("Either message or messages must be provided, but not both.")
     
     # 添加system提示（如果有）
-    if system:
+    if system_prompt:
         if "messages" not in payload:
             payload["messages"] = []
-        payload["messages"].insert(0, {"role": "system", "content": system})
+        payload["messages"].insert(0, {"role": "system", "content": system_prompt})
     
     # 发送请求
     response = requests.post(url, headers=headers, data=json.dumps(payload))
@@ -49,7 +49,6 @@ def get_answer(model: str , message: str = "", messages: list = [], system: str 
 
 if __name__ == "__main__":
     # 示例调用
-    model = "deepseek-ai/DeepSeek-V3"
     message = "你好，世界！"
-    answer = get_answer(model, message)
+    answer = get_answer(message)
     print(answer)
