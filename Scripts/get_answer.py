@@ -2,13 +2,17 @@ import requests
 import json
 
 def get_answer(model: str , message: str = "", messages: list = [], system: str = "") -> str:
+    '''
+    this is a function to get answer from chat model
+    '''
+
     # 设置API端点
-    url = "https://xxxxxxxxx"
+    url = "https://api.siliconflow.cn/v1/chat/completions"
     
     # 设置请求头
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer sk-xxxxxxxxxxxxxxxxxxxxxx"  
+        "Authorization": "Bearer sk-ytdjrnaeqwohnbzjarpxuafuzfpolqjimwqvyuwdbolgiyvi"  
     }
     
     # 构建请求数据
@@ -42,3 +46,10 @@ def get_answer(model: str , message: str = "", messages: list = [], system: str 
     response_data = response.json()
     return response_data["choices"][0]["message"]["content"]
 
+
+if __name__ == "__main__":
+    # 示例调用
+    model = "deepseek-ai/DeepSeek-V3"
+    message = "你好，世界！"
+    answer = get_answer(model, message)
+    print(answer)
