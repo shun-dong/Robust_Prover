@@ -1,5 +1,7 @@
 import requests
 import json
+from jsonschema import validate, ValidationError
+import re
 
 def get_answer(message: str = "", model: str = "deepseek-ai/DeepSeek-V3",  messages: list = [], system_prompt: str = "") -> str:
     '''
@@ -46,9 +48,44 @@ def get_answer(message: str = "", model: str = "deepseek-ai/DeepSeek-V3",  messa
     response_data = response.json()
     return response_data["choices"][0]["message"]["content"]
 
+schema = {
+    "type": "object",
+    "properties": {
+        "analysis": {"type": "string"},
+        "result": {"type": "string"}
+    },
+    "required": ["analysis", "result"],
+    "additionalProperties": False
+}
+
+default_system_prompt = f"""You are a mathematician, and you are tasked with solving complex mathematical problems. Please provide answer in JSON format with 'analysis' and 'result' fields."""
+
+def extract_json(text):
+    match = re.search(r"\{.*\}", text, re.S)
+    if match:
+        return match.group(0)
+    return None
+
+def get_schema_answer(message: str = "", model: str = "deepseek-ai/DeepSeek-V3",  messages: list = [], system_prompt: str = default_system_prompt) -> dict:
+    '''
+    this is a function to get answer from chat model with schema
+    '''
+    for i in range(3):
+        response = get_answer(message, model, messages, system_prompt)
+        json_text = extract_json(response)
+        if json_text:
+            try:
+                json_output = json.loads(json_text)
+                try:
+                    validate(instance=json_output, schema=schema)
+                except ValidationError:
+                    continue
+                return json_output
+            except json.JSONDecodeError:
+                continue
+        else:
+            continue
+    raise ValueError("Failed to extract valid JSON from the response after multiple attempts.")
 
 if __name__ == "__main__":
-    # 示例调用
-    message = "你好，世界！"
-    answer = get_answer(message)
-    print(answer)
+    print(get_schema_answer("x 是偶数, 那么 x^2 是偶数"))
