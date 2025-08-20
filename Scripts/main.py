@@ -4,13 +4,11 @@ from improve import check, fix
 
 def answer(NLQ: str):
     NLA = prepare(NLQ)
-    print("NLA:", NLA)
     LL = translate(NLQ,NLA)
-    print("LL:", LL)
     fixcount = 0
     feedback, fixed = check(LL)
     while 1:
-        if fixcount < 90:
+        if fixcount < 5:
             if not fixed:
                 LL = fix(LL, feedback)
                 fixcount += 1
@@ -18,12 +16,13 @@ def answer(NLQ: str):
             else:
                 return inverse_translate(LL), fixcount
         else:
-            return inverse_translate(LL), -1
+            return inverse_translate(LL), -1, LL
 
 
 
 if __name__ == "__main__":
     NLQ = "proof if x 是偶数, 那么 x^2 是偶数"
-    NLA , fixcount = answer(NLQ)
+    NLA , fixcount, LL = answer(NLQ)
     print("NLA:", NLA)
     print("fixcount:", fixcount)
+    print("Lean code:", LL)

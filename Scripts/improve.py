@@ -1,23 +1,34 @@
 import subprocess
 from get_answer import get_schema_answer
 
+lean_head = '''import Mathlib
+import Aesop
+set_option linter.style.setOption false
+set_option maxHeartbeats 0
+open BigOperators Real Nat Topology Rat
+
+'''
+
 def check(LL: str):
-    lean_file_path = "C:\\Users\\liuSu\\Projects\\proof\\Prover.lean"
-    with open(lean_file_path, 'w', encoding='utf-8') as f:
-        f.write(LL)
+    lean_root_path = "C:\\Users\\liuSu\\Projects\\proof"
+    with open(lean_root_path+"\\Prover.lean", 'w', encoding='utf-8') as f:
+        f.write(lean_head + LL)
     process = subprocess.Popen(
-        ["lean", lean_file_path],
+        ["lake", "env", "lean", "Prover.lean"],
+        cwd=lean_root_path,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
     out, err = process.communicate()
     fixed = process.returncode == 0
-    return out.decode() + err.decode(), fixed
+    feedback = out.decode() + err.decode()
+    print("Feedback:", feedback)  # 调试输出
+    return feedback, fixed
 
 def fix(LL: str, feedback: str):
-    return get_schema_answer(f"""Fix the following proof: the original proof is {LL}, and the feedback from lean is {feedback}. 
-                      Remember to include all necessary imports and definitions.
-                      In result part, You should only output the fixed lean language translation without any additional explanation. Don't use code blocks to wrap.""")["result"]
+    result = get_schema_answer(f"""Fix the following proof: the original proof is {LL}, and the feedback from lean is {feedback}. 
+                      The necessary imports for the Lean 4 environment have been included at the beginning of the proof, don't include them in your final code.""")["result"]
+    return lean_head + result
 
 
 if __name__ == "__main__":
