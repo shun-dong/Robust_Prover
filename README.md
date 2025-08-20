@@ -64,3 +64,32 @@ slogan: Logic. Rigor. Automation.
 3. A Language-Agent Approach to Formal Theorem-Proving
 4. An In-Context Learning Agent for Formal Theorem-Proving
 5. Prover Agent: An Agent-based Framework for Formal Mathematical Proofs
+
+# Presentation Outline
+1. **Introduction** 1min
+	- Team overview
+	- Problem: LLM vulnerability to interference in math reasoning
+	- Goal: Build robust math problem solver with self-correction
+2. **Approach**
+	- workflow outline
+	- 3-stage workflow: 
+	   - Preprocessing龙浩博: 先用一个较小的模型预处理去干扰, 再用去干扰后的问题生成回答 1min
+	   - Reasoning and transformation曹舒涵: 包括由自然语言到lean语言, lean语言到自然语言 1min
+	   - Verification武家玉 1min
+3. **Implementation**刘佩轩 1.5min
+	- 最终成功构建工作流, 实现用工作流解决示例问题
+	- 使用JSON schema, 保留分析的情况下标准化输出
+	- 使用prompt engineering, 渐进地引导AI生成答案, 并且包含足够的依赖库和定义
+	- 同时支持使用线上api和本地模型
+4. **Results & Evaluation**
+	- Demo of workflow (example problem)刘佩轩 1min
+	- Evaluation Method & Demo金慧妍/卫嫣然 1.5min
+	- Dataset & Github repository we have built吴炫谕 1min
+5. **Future Work**
+	- 完善项目:2min
+		- 修复步奏中可能会出现死循环，比如ring_nf被AI改为ring, 在下一轮中ring被AI改为ring_nf
+		- 更精细的和lean的交互
+	- Fine-tuning potential
+	- Generalization to other domains
+	- Future of computer-assisted proof 1.5min
+		- Category Theory, Type Theory

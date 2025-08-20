@@ -9,8 +9,7 @@ def pre_answer(NLQ: str) -> str:
 def prepare(NLQ: str, n_filter: int = 1) -> str:
     for i in range(n_filter):
         NLQ = filter(NLQ)
-    filtered_NLQ = get_schema_answer(f"Write the following question in clear mathematical language: {NLQ}\nIn result part, You should only include the mathematical question without any irrelevant information.")["result"]
-    NLA = pre_answer(filtered_NLQ)
+    NLA = pre_answer(NLQ)
     return NLA
 
 if __name__ == "__main__":

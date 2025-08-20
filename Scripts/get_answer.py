@@ -2,15 +2,14 @@ import requests
 import json
 from jsonschema import validate, ValidationError
 import re
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
 
-def get_answer(message: str = "", model: str = "deepseek-ai/DeepSeek-V3",  messages: list = [], system_prompt: str = "") -> str:
+def get_answer(message: str = "", model_id: str = "deepseek-ai/DeepSeek-V3",  messages: list = [], system_prompt: str = "") :
     '''
     this is a function to get answer from chat model
     '''
 
-    # 设置API端点
-    url = "https://api.siliconflow.cn/v1/chat/completions"
-    
     # 设置请求头
     headers = {
         "Content-Type": "application/json",
@@ -20,12 +19,12 @@ def get_answer(message: str = "", model: str = "deepseek-ai/DeepSeek-V3",  messa
     # 构建请求数据
     if message:
         payload = {
-            "model": model,
+            "model": model_id,
             "messages": [{"role": "user", "content": message}]
         }
     elif messages:
         payload = {
-            "model": model,
+            "model": model_id,
             "messages": messages
         }
     else:
@@ -37,16 +36,31 @@ def get_answer(message: str = "", model: str = "deepseek-ai/DeepSeek-V3",  messa
             payload["messages"] = []
         payload["messages"].insert(0, {"role": "system", "content": system_prompt})
     
-    # 发送请求
-    response = requests.post(url, headers=headers, data=json.dumps(payload))
-    
-    # 检查响应状态
-    if response.status_code != 200:
-        raise Exception(f"API请求失败，状态码: {response.status_code}, 错误信息: {response.text}")
-    
-    # 解析响应
-    response_data = response.json()
-    return response_data["choices"][0]["message"]["content"]
+    if model_id.endswith("-local"):
+        model_id = model_id.replace("-local", "")
+        tokenizer = AutoTokenizer.from_pretrained(model_id)
+        model = AutoModelForCausalLM.from_pretrained(model_id, device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
+        inputs = tokenizer.apply_chat_template(payload, tokenize=True, add_generation_prompt=True, return_tensors="pt").to(model.device)
+        outputs = model.generate(inputs, max_new_tokens=8192)
+        pattern = r"<｜Assistant｜>(.*?)<｜end▁of▁sentence｜>"# change this for your model
+        outputs_text = tokenizer.batch_decode(outputs)
+        match = re.search(pattern, outputs_text, re.DOTALL)
+        result = match.group(1) if match else ""
+        return result.strip()
+
+    else:
+        url = "https://api.siliconflow.cn/v1/chat/completions"
+        # 发送请求
+        response = requests.post(url, headers=headers, data=json.dumps(payload))
+        
+        # 检查响应状态
+        if response.status_code != 200:
+            raise Exception(f"API请求失败，状态码: {response.status_code}, 错误信息: {response.text}")
+        
+        # 解析响应
+        response_data = response.json()
+        print("Response Data:", response_data["choices"][0]["message"]["content"]+ "\n")  # 调试输出
+        return response_data["choices"][0]["message"]["content"]
 
 schema = {
     "type": "object",
@@ -58,7 +72,10 @@ schema = {
     "additionalProperties": False
 }
 
-default_system_prompt = f"""You are a mathematician, and you are tasked with solving complex mathematical problems. Please provide answer in JSON format with 'analysis' and 'result' fields."""
+default_system_prompt = f"""You are a mathematician, and you are tasked with solving complex mathematical problems. Please provide answer in JSON format with 'analysis' and 'result' fields.
+In the result part, You should output without any additional explanation. Don't use code blocks to wrap.
+Each part should be a multi-line plain text without any formatting.
+"""
 
 def extract_json(text):
     match = re.search(r"\{.*\}", text, re.S)
