@@ -1,18 +1,12 @@
 import subprocess
 from get_answer import get_schema_answer
+from translate import head_filter
 
-lean_head = '''import Mathlib
-import Aesop
-set_option linter.style.setOption false
-set_option maxHeartbeats 0
-open BigOperators Real Nat Topology Rat
-
-'''
 
 def check(LL: str):
     lean_root_path = "C:\\Users\\liuSu\\Projects\\proof"
     with open(lean_root_path+"\\Prover.lean", 'w', encoding='utf-8') as f:
-        f.write(lean_head + LL)
+        f.write(LL)
     process = subprocess.Popen(
         ["lake", "env", "lean", "Prover.lean"],
         cwd=lean_root_path,
@@ -28,7 +22,7 @@ def check(LL: str):
 def fix(LL: str, feedback: str):
     result = get_schema_answer(f"""Fix the following proof: the original proof is {LL}, and the feedback from lean is {feedback}. 
                       The necessary imports for the Lean 4 environment have been included at the beginning of the proof, don't include them in your final code.""")["result"]
-    return lean_head + result
+    return head_filter(result)
 
 
 if __name__ == "__main__":
