@@ -4,8 +4,14 @@ from jsonschema import validate, ValidationError
 import re
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
+import os
 
-def get_answer(message: str = "", model_id: str = "deepseek-ai/DeepSeek-V3",  messages: list = [], system_prompt: str = "") :
+api_key_path = os.path.join(os.path.dirname(__file__), 'api_key.txt')
+with open(api_key_path, 'r') as f:
+    api_key = f.read().strip()
+default_model_id = "chatgpt-4.1"
+
+def get_answer(message: str = "", model_id: str = default_model_id,  messages: list = [], system_prompt: str = "") :
     '''
     this is a function to get answer from chat model
     '''
@@ -13,7 +19,7 @@ def get_answer(message: str = "", model_id: str = "deepseek-ai/DeepSeek-V3",  me
     # 设置请求头
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer sk-ytdjrnaeqwohnbzjarpxuafuzfpolqjimwqvyuwdbolgiyvi"  
+        "Authorization": f"Bearer {api_key}"
     }
     
     # 构建请求数据
@@ -49,7 +55,7 @@ def get_answer(message: str = "", model_id: str = "deepseek-ai/DeepSeek-V3",  me
         return result.strip()
 
     else:
-        url = "https://api.siliconflow.cn/v1/chat/completions"
+        url = "https://sg.uiuiapi.com/v1/chat/completions"
         # 发送请求
         response = requests.post(url, headers=headers, data=json.dumps(payload))
         
@@ -72,7 +78,8 @@ schema = {
     "additionalProperties": False
 }
 
-default_system_prompt = f"""You are a mathematician, and you are tasked with solving complex mathematical problems. Please provide answer in JSON format with 'analysis' and 'result' fields.
+#TD try to use \\n instead of actual newlines in JSON
+default_system_prompt = f"""You are a mathematician, and you are tasked with solving complex mathematical problems. Please provide answer in JSON format with 'analysis' and 'result' fields. Note that use \\n instead of actual newlines in JSON.
 In the result part, You should output without any additional explanation. Don't use code blocks to wrap.
 Each part should be a multi-line plain text without any formatting.
 """
@@ -81,14 +88,16 @@ def extract_json(text):
     match = re.search(r"\{.*\}", text, re.S)
     if match:
         return match.group(0)
-    return None
+    else:
+        print("Failed to extract JSON")
+        return None
 
-def get_schema_answer(message: str = "", model: str = "deepseek-ai/DeepSeek-V3",  messages: list = [], system_prompt: str = default_system_prompt) -> dict:
+def get_schema_answer(message: str = "", model_id: str = default_model_id,  messages: list = [], system_prompt: str = default_system_prompt) -> dict:
     '''
     this is a function to get answer from chat model with schema
     '''
     for i in range(3):
-        response = get_answer(message, model, messages, system_prompt)
+        response = get_answer(message, model_id, messages, system_prompt)
         json_text = extract_json(response)
         if json_text:
             try:
