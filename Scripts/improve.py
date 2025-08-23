@@ -24,11 +24,21 @@ def fix(LL: str, feedback: str):
                       The necessary imports for the Lean 4 environment have been included at the beginning of the proof, don't include them in your final code.""")["result"]
     return head_filter(result)
 
+def fix_loop(loop_history: list):
+    loop_history_str = "\n---\n".join(loop_history)
+    result = get_schema_answer(f"""The following Lean proof code has entered a loop during the fixing process. They all have some mistakes. The history of the code is as follows:
+    {loop_history_str}
+    Please provide a new version of the Lean proof code that breaks this loop and solves the problem.
+    The necessary imports for the Lean 4 environment have been included at the beginning of the proof, don't include them in your final code.""")["result"]
+    return head_filter(result)
+
 
 if __name__ == "__main__":
-    LL = "theorem my_thm : 1 + 1 = 2 := "
-    result, fixed = check(LL)
-    LL = fix(LL, result)
-    result, fixed = check(LL)
-    print("Result:", result)
-    print("Fixed:", fixed)
+    # LL = "theorem my_thm : 1 + 1 = 2 := "
+    # result, fixed = check(LL)
+    # LL = fix(LL, result)
+    # result, fixed = check(LL)
+    # print("Result:", result)
+    # print("Fixed:", fixed)
+
+    print(fix_loop(["theorem my_thm : 1 + 1 = 2 := sorry", "theorem my_thm : 1 + 1 = 2 := by refl", "theorem my_thm : 1 + 1 = 2 := sorry"]))
