@@ -1,18 +1,23 @@
-from get_answer import get_answer, get_schema_answer
+from LLM import get_answer, get_schema_answer
 
-def filter(NLQ: str) -> str:
+def filter_NL(NLQ: str) -> str:
     return get_answer(f"Filter out any irrelevant information from the following question: {NLQ}\nYou should only output the relevant mathematical question without any additional explanation.")
 
-def pre_answer(NLQ: str) -> str:
+def answer_NL(NLQ: str) -> str:
     return get_answer(f"solve the following question: {NLQ}")
 
-def prepare(NLQ: str, n_filter: int = 1) -> str:
+def answer_LL(LLQ: str) -> str:
+    return get_schema_answer(f"""execute the following lean code and give the whole answer: {LLQ}\n
+The necessary imports for the Lean 4 environment have been included at the beginning of the proof, don't include them in your final code.""")["result"]
+
+def prepare_NL(NLQ: str, n_filter: int = 1) -> tuple[str, str]:
     for i in range(n_filter):
-        NLQ = filter(NLQ)
-    NLA = pre_answer(NLQ)
-    return NLA
+        NLQ = filter_NL(NLQ)
+    NLA = answer_NL(NLQ)
+    return NLQ, NLA
 
 if __name__ == "__main__":
     NLQ = "x 是偶数, 那么 x^2 是偶数"
-    NLA = prepare(NLQ)
+    filtered_NLQ, NLA = prepare_NL(NLQ)
+    print("Filtered NLQ:", filtered_NLQ)
     print("NLA:", NLA)

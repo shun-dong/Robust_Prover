@@ -1,9 +1,17 @@
 import subprocess
-from get_answer import get_schema_answer
-from translate import head_filter
+from LLM import get_schema_answer
+from convert import filter_LL, lean_head
 
+def answer_LL(LLQ: str):
+    LLQA= get_schema_answer(f"""complete the following lean code without sorry: {LLQ}\n {lean_head}""")["result"]
+    return filter_LL(LLQA)
+
+def give_lemma(LLQ: str):
+    lemma= get_schema_answer(f"""give useful lemma for the following lean code: {LLQ}\n In your code, do not include the original theorem statement, only include the lemma statement and proof.\n{lean_head}""")["result"]
+    return filter_LL(lemma)
 
 def check(LL: str):
+    #TD 这个要改, 没法并行
     lean_root_path = "C:\\Users\\liuSu\\Projects\\proof"
     with open(lean_root_path+"\\Prover.lean", 'w', encoding='utf-8') as f:
         f.write(LL)
@@ -22,7 +30,7 @@ def check(LL: str):
 def fix(LL: str, feedback: str):
     result = get_schema_answer(f"""Fix the following proof: the original proof is {LL}, and the feedback from lean is {feedback}. 
                       The necessary imports for the Lean 4 environment have been included at the beginning of the proof, don't include them in your final code.""")["result"]
-    return head_filter(result)
+    return filter_LL(result)
 
 def fix_loop(loop_history: list):
     loop_history_str = "\n---\n".join(loop_history)
@@ -30,15 +38,10 @@ def fix_loop(loop_history: list):
     {loop_history_str}
     Please provide a new version of the Lean proof code that breaks this loop and solves the problem.
     The necessary imports for the Lean 4 environment have been included at the beginning of the proof, don't include them in your final code.""")["result"]
-    return head_filter(result)
+    return filter_LL(result)
 
 
 if __name__ == "__main__":
-    # LL = "theorem my_thm : 1 + 1 = 2 := "
-    # result, fixed = check(LL)
-    # LL = fix(LL, result)
-    # result, fixed = check(LL)
-    # print("Result:", result)
-    # print("Fixed:", fixed)
+    pass
 
     print(fix_loop(["theorem my_thm : 1 + 1 = 2 := sorry", "theorem my_thm : 1 + 1 = 2 := by refl", "theorem my_thm : 1 + 1 = 2 := sorry"]))
