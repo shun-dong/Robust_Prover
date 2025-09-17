@@ -9,7 +9,7 @@ import os
 api_key_path = os.path.join(os.path.dirname(__file__), 'api_key.txt')
 with open(api_key_path, 'r') as f:
     api_key = f.read().strip()
-default_model_id = "chatgpt-4.1"
+default_model_id = "deepseek-ai/DeepSeek-V3.1"
 
 def get_answer(message: str = "", model_id: str = default_model_id,  messages: list = [], system_prompt: str = "") :
     '''
@@ -55,7 +55,7 @@ def get_answer(message: str = "", model_id: str = default_model_id,  messages: l
         return result.strip()
 
     else:
-        url = "https://sg.uiuiapi.com/v1/chat/completions"
+        url = "https://api.siliconflow.cn/v1/chat/completions"
         # 发送请求
         response = requests.post(url, headers=headers, data=json.dumps(payload))
         

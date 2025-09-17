@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from main import answer 
+from agent import answer_full_through_NLA
 
 # 创建主窗口
 root = tk.Tk()
@@ -46,7 +46,7 @@ def on_submit():
     if not question:
         messagebox.showerror("Error", "Please enter a math question!")
         return
-    result = answer(question)
+    result = answer_full_through_NLA(question)
     show_answer(result)
 
 # 提交按钮
