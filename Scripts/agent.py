@@ -1,5 +1,5 @@
 from prepare import prepare_NL
-from convert import NLQA_to_LLQA, LLQA_to_NLA
+from convert import NLQA_to_LLQA, LLQA_to_NLA, filter_LL
 from solve import check, fix, fix_loop, answer_LL, give_lemma
 
 
@@ -35,6 +35,7 @@ def answer_core_light(LLQ: str, max_fix_attempts:int = 5) -> tuple[str, int]:
     LLQA, fixcount = feedback_loop(LLQA, max_fix_attempts)
     return LLQA, fixcount
 
+# 引理的去重与拼接
 def answer_core_heavy(LLQ: str, max_fix_attempts:int = 5, n_lemmas:int = 3) -> tuple[str, int]:
     lemmas = []
     for i in range(n_lemmas):
@@ -42,13 +43,13 @@ def answer_core_heavy(LLQ: str, max_fix_attempts:int = 5, n_lemmas:int = 3) -> t
         lemma_full , lemma_fixcount = answer_core_light(lemma, max_fix_attempts)
         if lemma_fixcount != -1:
             lemmas.append(lemma_full)
-    LLQ_with_lemmas = "\n\n".join(lemmas) + "\n\n" + LLQ
-    LLQA = answer_LL(LLQ_with_lemmas)
+            LLQ = filter_LL(lemma_full + "\n\n" + LLQ)
+    LLQA = answer_LL(LLQ)
     LLQA, fixcount = feedback_loop(LLQA, max_fix_attempts)
     return LLQA, fixcount
 
 if __name__ == "__main__":
-    print(answer_full_through_NLA("there are infinite primes. what's the weather today?"))
+    print(answer_core_heavy("there are infinite primes."))
     # NLQ = "proof if x is even, then x^2 is even. what's the weather today?"
     # NLA, LL, fixcount = answer_full(NLQ)
     # print("answer:", NLA)

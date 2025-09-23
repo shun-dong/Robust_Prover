@@ -15,6 +15,34 @@ Robust_Prover
 
 
 # Robust Mathematical Problem Solver
+```mermaid
+flowchart
+    subgraph Prepare
+        A(Natural Language Question) --Filter --> C[/Natural Language Question/]
+        C'[/Natural Language Answer/]
+        
+        C -.-> C'
+    end
+
+    subgraph Solve
+        D[/Lean Language Question/]
+        D'[/Lean Language Answer/]
+        F[/Answer & Feedback/]
+        G{Correct?}
+        H[/Final Answer/]
+
+        C --> D
+        D --> D'
+        C -.-> D'
+        C' -.-> D'
+        D' -- check --> F
+        F --> G
+        G -- Yes --> H
+        G -- No --> fix --> D'
+    end
+
+    H -.-> I(Natural Language Answer)
+```
 
 # Info
 

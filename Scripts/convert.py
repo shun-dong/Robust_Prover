@@ -5,7 +5,8 @@ lean_head = '''import Mathlib
 import Aesop
 set_option linter.style.setOption false
 set_option maxHeartbeats 0
-open BigOperators Real Nat Topology Rat
+open scoped Affine BigOperators Finset Function EuclideanGeometry Real
+open BigOperators Real Nat Topology Rat Affine Finset Set Module Classical Cardinal Polynomial
 
 '''
 
@@ -26,7 +27,7 @@ def NLQA_to_LLQA(NLQ:str, NLA: str) :
     return filter_LL(LL)
 
 def NLQ_to_LLQ(NLQ: str):
-    LLQ = get_schema_answer(f"""translate the following natural language question to lean language question with sorry:\n Question: {NLQ}
+    LLQ = get_schema_answer(f"""translate the following natural language question to lean language question:\n Question: {NLQ}
     """)["result"]
     return filter_LL(LLQ)
 

@@ -7,7 +7,7 @@ def answer_LL(LLQ: str):
     return filter_LL(LLQA)
 
 def give_lemma(LLQ: str):
-    lemma= get_schema_answer(f"""give useful lemma for the following lean code: {LLQ}\n In your code, do not include the original theorem statement, only include the lemma statement and proof.\n{lean_head}""")["result"]
+    lemma= get_schema_answer(f"""give useful new lemma for the following lean code: {LLQ}\n In your code, do not include the original theorem statement, only include the lemma statement.\n{lean_head}""")["result"]
     return filter_LL(lemma)
 
 def check(LL: str):

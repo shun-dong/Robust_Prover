@@ -1,0 +1,3 @@
+[submodule "Data/IMO"]
+	path = Data/IMO
+	url = git@github.com:jsm28/IMOLean.git
